@@ -160,10 +160,14 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="AdventurerHead.png" />
+    <Image Include="Tileset1-1.png" />
     <Image Include="Tileset1.png" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Map.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="MainMap.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
