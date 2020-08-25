@@ -4,14 +4,13 @@ struct Tile
 {
 	int x;
 	int y;
-
 	int idx;
 	int sx;
 	int sy;
-
-	std::vector<int> Next;
-	std::vector<float> Dist;
-
+	std::vector<Tile*> neighbours;
+	bool isSolid;
+	float Local;
+	float Global;
 };
 
 class Map
@@ -34,14 +33,11 @@ public:
 	std::string sName;
 	olc::Sprite* mapsprite;
 
-	//void initialiseDist(std::vector<Tile> &map);
-	//void initialiseNext(std::vector<Tile> &map);
-
-
 	bool Create(std::string FileData, olc::Sprite* sprite, std::string name);
 
 	int GetIndex(int x, int y);
 	bool GetSolid(int x, int y);
+	void genNeighbours();
 
 	void AddTiles(std::vector<Tile>& tiles, Map* map);
 

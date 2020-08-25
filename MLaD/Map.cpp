@@ -9,6 +9,8 @@ Map::Map()
 	mHeight = 0;
 	m_solids = nullptr;
 	m_indices = nullptr;
+
+	genNeighbours();
 }
 
 
@@ -42,6 +44,32 @@ bool Map::GetSolid(int x, int y)
 	}
 }
 
+void Map::genNeighbours()
+{
+	for (int x = 0; x < mWidth; x++)
+	{
+		for (int y = 0; y < mHeight; y++)
+		{
+			if (y > 0)
+			{
+				tiles[y * mWidth + x].neighbours.push_back(&tiles[(y - 1) * mWidth + (x + 0)]);
+			}
+			if (y < mHeight - 1)
+			{
+				tiles[y * mWidth + x].neighbours.push_back(&tiles[(y + 1) * mWidth + (x + 0)]);
+			}
+			if (x > 0)
+			{
+				tiles[y * mWidth + x].neighbours.push_back(&tiles[(y + 0) * mWidth + (x - 1)]);
+			}
+			if (x < mWidth - 1)
+			{
+				tiles[y * mWidth + x].neighbours.push_back(&tiles[(y + 0) * mWidth + (x + 1)]);
+			}
+		}
+	}
+}
+
 void Map::AddTiles(std::vector<Tile>& tiles, Map* map)
 {
 	for (int i = 0; i < mWidth; i++)
@@ -60,32 +88,6 @@ void Map::AddTiles(std::vector<Tile>& tiles, Map* map)
 		}
 	}
 }
-
-//void Map::initialiseDist(std::vector<Tile> &map)
-//{
-//	
-//	for (size_t i = 0; i < map.size(); i++)
-//	{	
-//		map[i].Dist.reserve(map.size());
-//		for (size_t j = 0; j < map.size(); j++)
-//		{
-//			map[i].Dist.push_back(INFINITY);
-//		}
-//	}
-//}
-//
-//void Map::initialiseNext(std::vector<Tile> &map)
-//{
-//	for (size_t i = 0; i < map.size(); i++)
-//	{
-//		map[i].Next.reserve(map.size());
-//		for (size_t j = 0; j < map.size(); j++)
-//		{
-//			map[i].Next.push_back(-1);
-//		}
-//	}
-//}
-
 
 
 bool Map::Create(std::string FileData, olc::Sprite* sprite, std::string name)
