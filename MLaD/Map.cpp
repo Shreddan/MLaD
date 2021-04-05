@@ -9,8 +9,6 @@ Map::Map()
 	mHeight = 0;
 	m_solids = nullptr;
 	m_indices = nullptr;
-
-	genNeighbours();
 }
 
 
@@ -24,7 +22,7 @@ int Map::GetIndex(int x, int y)
 {
 	if (x >= 0 && x < mWidth && y >= 0 && y < mHeight)
 	{
-		return m_indices[y*mWidth + x];
+		return m_indices[y * mWidth + x];
 	}
 	else
 	{
@@ -70,7 +68,7 @@ void Map::genNeighbours()
 	}
 }
 
-void Map::AddTiles(std::vector<Tile>& tiles, Map* map)
+void Map::AddTiles(std::deque<Tile>& tiles, Map* map)
 {
 	for (int i = 0; i < mWidth; i++)
 	{
@@ -78,10 +76,13 @@ void Map::AddTiles(std::vector<Tile>& tiles, Map* map)
 		{
 			Tile t;
 			t.idx = map->GetIndex(i, j);
+			t.isSolid = map->GetSolid(i, j);
 			t.sx = t.idx % 9;
 			t.sy = t.idx / 9;
 			t.x = i * TileWidth;
 			t.y = j * TileHeight;
+			t.Global = INFINITY;
+			t.Local = INFINITY;
 
 			tiles.emplace_back(t);
 

@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include "Map.h"
 
 struct Adventurers
@@ -28,39 +29,56 @@ class Engine : public olc::PixelGameEngine
 {
 public:
 	Engine();
+
+	//Algorithm Funcs
+	bool aStar(Map* m_CurrentMap, Tile* Start, Tile* End);
 	
 	//Draw Funcs
-	void DrawTileMap(Map* m_CurrentMap, std::vector<Tile> tiles);
+	void DrawTileMap(Map* m_CurrentMap, std::deque<Tile> tiles);
 	void DisplayTime(int Day, int Hour);
-	void DisplayNumAdvent(std::vector<Adventurers> advent);
-	void DrawHead(olc::Sprite& adhead, std::vector<Adventurers> advent);
+	void DisplayNumAdvent();
+	void DrawHead(olc::Sprite& adhead);
 
 	//Time Funcs
 	void EndofDay(int& Day, int& Hour);
 	void GameTime(float& Tick, float fElapsedTime, float TickTime, int& Hour);
-	
+
+	void DrawMousePos();
+	//void test();
+
 
 	//Name Funcs
 	std::string RandNameMale();
 	std::string RandNameFemale();
 
 	//Adventurer Funcs
-	void addAdventurer(std::vector<Adventurers>& advent, std::string& tempName, Map* m_CurrentMap);
-	void MoveAdventurer(std::vector<Adventurers> advent, std::vector<std::vector<int>> Next, int SelectedTile);
-	void Input(std::vector<Adventurers>& advent);
+	void addAdventurer(std::string& tempName, Map* m_CurrentMap);
+	void MoveAdventurer();
+	void Input();
+
+	//olc::vi2d ScreentoWorld(int x, int y);
+
 	
 	//Engine Funcs
 	bool OnUserCreate();
 	bool OnUserUpdate(float fElapsedTime);
 	
-private:
-	Map* m_CurrentMap = nullptr;
+	//Variables
+	Map* currentMap = nullptr;
 	olc::Sprite* adhead = nullptr;
 	olc::Decal* head = nullptr;
 	std::string tempName;
-	std::vector<Adventurers> advent;
+	std::deque<Adventurers> advent;
+	Tile* t = nullptr;
+	Tile* destination = nullptr;
+
+	int TileX = 0;
+	int TileY = 0;
 	float Tick = 0;
 	float TickTime = 20.f;
 	int Day = 1;
 	int Hour = 7;
+
+	bool pathComplete = false;
+	bool testcomplete = false;
 };

@@ -1,5 +1,7 @@
 #pragma once
 #include "olcPixelGameEngine.h"
+#include <deque>
+
 struct Tile
 {
 	int x;
@@ -7,10 +9,12 @@ struct Tile
 	int idx;
 	int sx;
 	int sy;
-	std::vector<Tile*> neighbours;
+	std::deque<Tile*> neighbours;
 	bool isSolid;
 	float Local;
 	float Global;
+	bool Visited = false;
+	Tile* parent;
 };
 
 class Map
@@ -39,9 +43,10 @@ public:
 	bool GetSolid(int x, int y);
 	void genNeighbours();
 
-	void AddTiles(std::vector<Tile>& tiles, Map* map);
+	void AddTiles(std::deque<Tile>& tiles, Map* map);
 
-	std::vector<Tile> tiles;
+	std::deque<Tile> tiles;
+	
 
 private:
 	int *m_indices = nullptr;
